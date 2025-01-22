@@ -85,7 +85,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: qa
-    if: github.ref=='refs/heads/master'
+    if: github.ref == 'refs/heads/master'
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
@@ -100,7 +100,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'moviecards-peña'
+          app-name: 'moviecards-pena'
           slot-name: 'Production'
           package: '*.jar'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_109C02AEEFCA4D528684DBE6FB685B8E }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D18BFAB128744F14B503E06809792F90 }}
