@@ -2,7 +2,6 @@ package com.lauracercas.moviecards.service.movie;
 
 
 import com.lauracercas.moviecards.model.Movie;
-//import com.lauracercas.moviecards.repositories.MovieJPA;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,29 +18,21 @@ import java.util.List;
 @Service
 public class MovieServiceImpl implements MovieService {
 
-    //private final MovieJPA movieJPA;
     @Autowired
     RestTemplate template;
 
     String url = "https://moviecards-pena-service.azurewebsites.net/movies";
 
-    //public MovieServiceImpl(MovieJPA movieJPA) {
-    //    this.movieJPA = movieJPA;
-    //}
-
 
     @Override
     public List<Movie> getAllMovies() {
-        //return movieJPA.findAll();
         Movie[] movies = template.getForObject(url,
         Movie[].class);
-        List<Movie> moviesList = Arrays.asList(movies);
-        return moviesList;
+        return Arrays.asList(movies);
     }
 
     @Override
     public Movie save(Movie movie) {
-        //return movieJPA.save(movie);
         if (movie.getId() != null && movie.getId() > 0) {
             template.put(url, movie);
         } else {
@@ -53,9 +44,6 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie getMovieById(Integer movieId) {
-        //return movieJPA.getById(movieId);
-        Movie movie = template.getForObject(url+"/"+movieId,
-        Movie.class);
-        return movie;
+        return template.getForObject(url+"/"+movieId, Movie.class);
     }
 }
