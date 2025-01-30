@@ -23,9 +23,9 @@ import java.util.List;
 @Controller
 public class ActorController {
 
-    private static final String ActorLabel = "actor";
-    private static final String TitleLabel = "title";
-    private static final String ActorsFormPath = "actors/form";
+    private static final String ACTOR_LABEL = "actor";
+    private static final String TITLE_LABEL = "title";
+    private static final String ACTORS_FORM_PATH = "actors/form";
 
     private final ActorService actorService;
 
@@ -41,15 +41,15 @@ public class ActorController {
 
     @GetMapping("actors/new")
     public String newActor(Model model) {
-        model.addAttribute(ActorLabel, new Actor());
-        model.addAttribute(TitleLabel, Messages.NEW_ACTOR_TITLE);
-        return ActorsFormPath;
+        model.addAttribute(ACTOR_LABEL, new Actor());
+        model.addAttribute(TITLE_LABEL, Messages.NEW_ACTOR_TITLE);
+        return ACTORS_FORM_PATH;
     }
 
     @PostMapping("saveActor")
     public String saveActor(@ModelAttribute Actor actor, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return ActorsFormPath;
+            return ACTORS_FORM_PATH;
         }
         Actor actorSaved = actorService.save(actor);
         if (actor.getId() != null) {
@@ -58,21 +58,21 @@ public class ActorController {
             model.addAttribute("message", Messages.SAVED_ACTOR_SUCCESS);
         }
 
-        model.addAttribute(ActorLabel, actorSaved);
-        model.addAttribute(TitleLabel, Messages.EDIT_ACTOR_TITLE);
-        return ActorsFormPath;
+        model.addAttribute(ACTOR_LABEL, actorSaved);
+        model.addAttribute(TITLE_LABEL, Messages.EDIT_ACTOR_TITLE);
+        return ACTORS_FORM_PATH;
     }
 
     @GetMapping("editActor/{actorId}")
     public String editActor(@PathVariable Integer actorId, Model model) {
         Actor actor = actorService.getActorById(actorId);
         List<Movie> movies = actor.getMovies();
-        model.addAttribute(ActorLabel, actor);
+        model.addAttribute(ACTOR_LABEL, actor);
         model.addAttribute("movies", movies);
 
-        model.addAttribute(TitleLabel, Messages.EDIT_ACTOR_TITLE);
+        model.addAttribute(TITLE_LABEL, Messages.EDIT_ACTOR_TITLE);
 
-        return ActorsFormPath;
+        return ACTORS_FORM_PATH;
     }
 
 

@@ -23,9 +23,9 @@ import java.util.List;
 @Controller
 public class MovieController {
 
-    private static final String MovieLabel = "movie";
-    private static final String TitleLabel = "title";
-    private static final String MoviesFormPath = "movies/form";
+    private static final String MOVIE_LABEL = "movie";
+    private static final String TITLE_LABEL = "title";
+    private static final String MOVIE_FORM_PATH = "movies/form";
 
     private final MovieService movieService;
 
@@ -41,15 +41,15 @@ public class MovieController {
 
     @GetMapping("movies/new")
     public String newMovie(Model model) {
-        model.addAttribute(MovieLabel, new Movie());
-        model.addAttribute(TitleLabel, Messages.NEW_MOVIE_TITLE);
-        return MoviesFormPath;
+        model.addAttribute(MOVIE_LABEL, new Movie());
+        model.addAttribute(TITLE_LABEL, Messages.NEW_MOVIE_TITLE);
+        return MOVIE_FORM_PATH;
     }
 
     @PostMapping("saveMovie")
     public String saveMovie(@ModelAttribute Movie movie, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return MoviesFormPath;
+            return MOVIE_FORM_PATH;
         }
         Movie movieSaved = movieService.save(movie);
         if (movieSaved.getId() != null) {
@@ -58,21 +58,21 @@ public class MovieController {
             model.addAttribute("message", Messages.SAVED_MOVIE_SUCCESS);
         }
 
-        model.addAttribute(MovieLabel, movieSaved);
-        model.addAttribute(TitleLabel, Messages.EDIT_MOVIE_TITLE);
-        return MoviesFormPath;
+        model.addAttribute(MOVIE_LABEL, movieSaved);
+        model.addAttribute(TITLE_LABEL, Messages.EDIT_MOVIE_TITLE);
+        return MOVIE_FORM_PATH;
     }
 
     @GetMapping("editMovie/{movieId}")
     public String editMovie(@PathVariable Integer movieId, Model model) {
         Movie movie = movieService.getMovieById(movieId);
         List<Actor> actors = movie.getActors();
-        model.addAttribute(MovieLabel, movie);
+        model.addAttribute(MOVIE_LABEL, movie);
         model.addAttribute("actors", actors);
 
-        model.addAttribute(TitleLabel, Messages.EDIT_MOVIE_TITLE);
+        model.addAttribute(TITLE_LABEL, Messages.EDIT_MOVIE_TITLE);
 
-        return MoviesFormPath;
+        return MOVIE_FORM_PATH;
     }
 
 
